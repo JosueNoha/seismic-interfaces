@@ -1,0 +1,134 @@
+Estructura del Proyecto Principal
+seismic-interfaces-common/
+├── pyproject.toml                          # Configuración principal centralizada
+├── src/
+│   └── seismic_common/
+│       ├── __init__.py
+│       ├── core/                           # Módulos centrales compartidos
+│       │   ├── __init__.py
+│       │   ├── etabs_utils.py             # Utilidades ETABS (centralizado)
+│       │   ├── sismo_utils.py             # Cálculos sísmicos base
+│       │   ├── unit_tool.py               # Herramientas de unidades
+│       │   └── latex_utils.py             # Utilidades LaTeX
+│       ├── controllers/                    # Controladores base (lógica común)
+│       │   ├── __init__.py
+│       │   ├── base_controller.py         # Controlador base común
+│       │   ├── seismic_controller.py      # Lógica sísmica común
+│       │   ├── table_controller.py        # Controlador de tablas común
+│       │   └── graph_controller.py        # Controlador de gráficos común
+│       ├── widgets/                        # Widgets comunes (no ventanas principales)
+│       │   ├── __init__.py
+│       │   ├── parameter_widgets.py       # Widgets de parámetros reutilizables
+│       │   ├── location_selectors.py      # Selectores de ubicación comunes
+│       │   ├── system_selectors.py        # Selectores de sistemas estructurales
+│       │   └── irregularity_widgets.py    # Widgets de irregularidades
+│       ├── dialogs/                        # Diálogos comunes
+│       │   ├── __init__.py
+│       │   ├── table_dialog.py           # Diálogo de tablas (desde .ui)
+│       │   ├── graph_dialog.py           # Diálogo de gráficos (desde .ui)
+│       │   └── description_dialog.py     # Diálogo de descripciones (desde .ui)
+│       ├── models/                         # Modelos de datos comunes
+│       │   ├── __init__.py
+│       │   ├── pandas_table_model.py     # Modelo de tabla pandas común
+│       │   ├── seismic_data_model.py     # Modelo de datos sísmicos
+│       │   └── location_model.py         # Modelo de ubicaciones
+│       ├── memory/                         # Sistema de generación de memorias
+│       │   ├── __init__.py
+│       │   ├── base/
+│       │   │   ├── __init__.py
+│       │   │   ├── memory_generator.py   # Generador base de memorias
+│       │   │   └── template_manager.py   # Gestor de plantillas
+│       │   ├── templates/                # Plantillas LaTeX base
+│       │   │   ├── base_template.ltx     # Plantilla base común
+│       │   │   └── common_sections.ltx   # Secciones comunes
+│       │   └── processors/
+│       │       ├── __init__.py
+│       │       ├── table_processor.py    # Procesador de tablas
+│       │       ├── graph_processor.py    # Procesador de gráficos
+│       │       └── variable_processor.py # Procesador de variables
+│       ├── data/                          # Gestión de datos
+│       │   ├── __init__.py
+│       │   ├── seismic_data.py          # Clase base de datos sísmicos
+│       │   ├── location_database.py     # Base de datos de ubicaciones
+│       │   └── standards/               # Estándares sísmicos
+│       │       ├── __init__.py
+│       │       ├── base_standard.py     # Clase base de estándares
+│       │       └── common_parameters.py  # Parámetros comunes
+│       └── utils/                        # Utilidades compartidas
+│           ├── __init__.py
+│           ├── validators.py            # Validadores comunes
+│           ├── converters.py            # Convertidores de unidades
+│           └── file_handlers.py         # Manejadores de archivos
+└── resources/                           # Recursos compartidos
+    ├── ui/                             # Archivos .ui comunes
+    │   ├── table_dialog.ui            # Diálogo de tabla común
+    │   ├── graph_dialog.ui            # Diálogo de gráfico común
+    │   └── description_dialog.ui      # Diálogo de descripción común
+    ├── images/
+    │   └── common/                    # Imágenes comunes
+    └── data/
+        └── seismic_zones.csv         # Datos de zonas sísmicas comunes
+Proyectos Específicos por País
+seismic-app-peru/
+├── pyproject.toml                        # Dependencia: seismic-interfaces-common
+├── src/
+│   └── seismic_peru/
+│       ├── __init__.py
+│       ├── __main__.py                  # Punto de entrada principal
+│       ├── main_window.py               # Controlador de ventana principal
+│       ├── interfaces/                  # Interfaces generadas por Qt Designer
+│       │   ├── __init__.py
+│       │   ├── peru_main_window.py     # Generado desde peru_main.ui
+│       │   └── peru_specific_dialog.py # Diálogos específicos si los hay
+│       ├── controllers/                 # Controladores específicos de Perú
+│       │   ├── __init__.py
+│       │   └── peru_main_controller.py # Hereda de base_controller
+│       ├── standards/
+│       │   ├── __init__.py
+│       │   ├── e030_standard.py        # Implementación E-030
+│       │   └── peru_parameters.py      # Parámetros específicos de Perú
+│       ├── memory/
+│       │   ├── __init__.py
+│       │   ├── peru_memory_generator.py # Hereda de memory_generator
+│       │   └── templates/
+│       │       └── peru_template.ltx   # Plantilla específica de Perú
+│       └── resources/
+│           ├── ui/
+│           │   └── peru_main.ui        # Archivo Qt Designer principal
+│           ├── images/
+│           │   ├── peru_seismic_map.png
+│           │   └── peru_logo.png
+│           └── data/
+│               └── peru_zones.csv      # Datos específicos de Perú
+
+seismic-app-bolivia/
+├── pyproject.toml                       # Dependencia: seismic-interfaces-common
+├── src/
+│   └── seismic_bolivia/
+│       ├── __init__.py
+│       ├── __main__.py                 # Punto de entrada principal
+│       ├── main_window.py              # Controlador de ventana principal
+│       ├── interfaces/                 # Interfaces generadas por Qt Designer
+│       │   ├── __init__.py
+│       │   ├── bolivia_main_window.py  # Generado desde bolivia_main.ui
+│       │   └── bolivia_specific_dialog.py
+│       ├── controllers/                # Controladores específicos de Bolivia
+│       │   ├── __init__.py
+│       │   └── bolivia_main_controller.py
+│       ├── standards/
+│       │   ├── __init__.py
+│       │   ├── cnbds_standard.py       # Implementación CNBDS 2023
+│       │   └── bolivia_parameters.py   # Parámetros específicos de Bolivia
+│       ├── memory/
+│       │   ├── __init__.py
+│       │   ├── bolivia_memory_generator.py
+│       │   └── templates/
+│       │       └── bolivia_template.ltx
+│       └── resources/
+│           ├── ui/
+│           │   └── bolivia_main.ui     # Archivo Qt Designer principal
+│           ├── images/
+│           │   ├── bolivia_seismic_map.png
+│           │   └── bolivia_logo.png
+│           └── data/
+│               └── bolivia_zones.csv   # Datos específicos de Bolivia
