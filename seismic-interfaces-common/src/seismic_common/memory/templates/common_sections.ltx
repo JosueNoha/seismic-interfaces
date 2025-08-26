@@ -1,0 +1,577 @@
+%======================================================================
+% SECCIONES COMUNES PARA MEMORIAS DE CÁLCULO SÍSMICO
+% Sistema Centralizado de Interfaces Sísmicas
+% Versión: 1.0.0
+%======================================================================
+% 
+% Este archivo contiene secciones LaTeX reutilizables que pueden ser
+% incluidas en diferentes plantillas de memorias sísmicas.
+% Cada sección está marcada con comentarios para fácil identificación.
+%
+%======================================================================
+
+%======================================================================
+% SECCIÓN: DESCRIPCIÓN GENERAL DEL PROYECTO
+%======================================================================
+% Placeholder: @content_description
+% Descripción base que puede ser personalizada por país
+
+% --- DESCRIPCIÓN GENERAL BASE ---
+% @description_general_start
+\section{Descripción General del Proyecto}
+\label{sec:DescripcionGeneral}
+
+\subsection{Alcance del Análisis}
+\label{subsec:AlcanceDelAnalisis}
+
+El presente documento tiene por objeto desarrollar la memoria de cálculo del análisis sísmico 
+para el proyecto \textit{@proyecto.0nn}, ubicado en \textit{@ubicacion.0nn}. El análisis se 
+realiza siguiendo los lineamientos establecidos en \textit{@norma.0nn}.
+
+\subsection{Características del Proyecto}
+\label{subsec:CaracteristicasDelProyecto}
+
+\begin{table}[H]
+\centering
+\caption{Características Principales del Proyecto}
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Parámetro} & \textbf{Descripción} \\
+\hline
+Nombre del Proyecto & @proyecto.0nn \\
+\hline
+Ubicación & @ubicacion.0nn \\
+\hline
+Uso de la Edificación & @uso_edificacion.0nn \\
+\hline
+Número de Pisos & @num_pisos.0nn \\
+\hline
+Altura Total & @altura_total.2m m \\
+\hline
+Sistema Estructural X & @sistema_x.0nn \\
+\hline
+Sistema Estructural Y & @sistema_y.0nn \\
+\hline
+Área de Planta Típica & @area_planta.2m2 m² \\
+\hline
+\end{tabular}
+\label{tab:CaracteristicasProyecto}
+\end{table}
+
+\subsection{Metodología de Análisis}
+\label{subsec:MetodologiaDeAnalisis}
+
+El análisis sísmico se desarrolla mediante análisis modal espectral, considerando:
+
+\begin{enumerate}[leftmargin=*]
+    \item Determinación de parámetros sísmicos de sitio según ubicación geográfica
+    \item Construcción del espectro de respuesta según normativa aplicable
+    \item Modelación estructural tridimensional con distribución de masas
+    \item Análisis modal considerando participación mínima de 90\% de masa en cada dirección
+    \item Evaluación de irregularidades estructurales en planta y elevación
+    \item Verificación de derivas de entrepiso según límites normativos
+    \item Cálculo de fuerzas sísmicas y distribución en elementos estructurales
+\end{enumerate}
+
+% @description_general_end
+
+%======================================================================
+% SECCIÓN: CRITERIOS DE DISEÑO SÍSMICO
+%======================================================================
+% Placeholder: @content_criteria
+% Criterios base que pueden ser personalizados por país
+
+% --- CRITERIOS DE DISEÑO BASE ---
+% @criteria_design_start
+\section{Criterios de Diseño Sísmico}
+\label{sec:CriteriosDeDiseno}
+
+\subsection{Filosofía de Diseño}
+\label{subsec:FilosofiaDeDiseno}
+
+El diseño sísmico se basa en los siguientes principios fundamentales:
+
+\begin{criteriabox}[Filosofía de Diseño Sísmico]
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Sismo de Servicio:} La estructura no debe presentar daños bajo sismos moderados
+    \item \textbf{Sismo de Diseño:} La estructura puede presentar daños controlados sin colapso
+    \item \textbf{Sismo Severo:} La estructura debe evitar el colapso para preservar vidas
+\end{enumerate}
+\end{criteriabox}
+
+\subsection{Niveles de Desempeño}
+\label{subsec:NivelesDeDesempeno}
+
+\begin{table}[H]
+\centering
+\caption{Niveles de Desempeño Sísmico}
+\begin{tabular}{|l|p{6cm}|c|}
+\hline
+\textbf{Nivel} & \textbf{Descripción} & \textbf{Probabilidad} \\
+\hline
+Operacional & Sin daños estructurales ni no estructurales & 50\% en 30 años \\
+\hline
+Inmediata Ocupación & Daños no estructurales leves & 10\% en 50 años \\
+\hline
+Seguridad de Vida & Daños estructurales reparables & 2\% en 50 años \\
+\hline
+Prevención de Colapso & Daños severos sin colapso total & 2\% en 100 años \\
+\hline
+\end{tabular}
+\label{tab:NivelesDesempeno}
+\end{table}
+
+\subsection{Criterios de Aceptación}
+\label{subsec:CriteriosDeAceptacion}
+
+\subsubsection{Derivas de Entrepiso}
+Las derivas de entrepiso no deben exceder los límites establecidos por la normativa:
+
+\begin{table}[H]
+\centering
+\caption{Límites de Deriva según Tipo Estructural}
+\begin{tabular}{|l|c|}
+\hline
+\textbf{Sistema Estructural} & \textbf{Deriva Límite} \\
+\hline
+Concreto Armado & 0.007 \\
+\hline
+Acero & 0.010 \\
+\hline
+Mampostería & 0.005 \\
+\hline
+Madera & 0.010 \\
+\hline
+\end{tabular}
+\label{tab:LimitesDeriva}
+\end{table}
+
+\subsubsection{Separación Sísmica}
+La separación mínima entre edificios adyacentes se calcula como:
+
+\begin{equation}
+s = 0.006 \cdot h \geq s_{min}
+\label{eq:SeparacionSismica}
+\end{equation}
+
+donde:
+\begin{itemize}[leftmargin=*]
+    \item $s$ = separación sísmica requerida
+    \item $h$ = altura del edificio más alto
+    \item $s_{min}$ = separación mínima normativa (@s_min.3cm cm)
+\end{itemize}
+
+% @criteria_design_end
+
+%======================================================================
+% SECCIÓN: ANÁLISIS DE CARGAS
+%======================================================================
+% Placeholder: @content_loads
+% Análisis de cargas base que puede ser personalizado
+
+% --- ANÁLISIS DE CARGAS BASE ---
+% @loads_analysis_start
+\section{Análisis de Cargas}
+\label{sec:AnalisisDeCargas}
+
+\subsection{Cargas Permanentes}
+\label{subsec:CargasPermanentes}
+
+Las cargas permanentes consideradas incluyen el peso propio de los elementos 
+estructurales y las cargas muertas adicionales:
+
+\begin{table}[H]
+\centering
+\caption{Cargas Permanentes Típicas}
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{Elemento} & \textbf{Peso Unitario} & \textbf{Unidad} \\
+\hline
+Concreto Armado & 2400 & kg/m³ \\
+\hline
+Losa Aligerada e=20cm & 300 & kg/m² \\
+\hline
+Losa Maciza e=15cm & 360 & kg/m² \\
+\hline
+Tabiquería & 150 & kg/m² \\
+\hline
+Acabados & 100 & kg/m² \\
+\hline
+Instalaciones & 50 & kg/m² \\
+\hline
+\end{tabular}
+\label{tab:CargasPermanentes}
+\end{table}
+
+\subsection{Cargas Variables}
+\label{subsec:CargasVariables}
+
+Las cargas vivas consideradas según el uso de la edificación:
+
+\begin{table}[H]
+\centering
+\caption{Cargas Vivas según Uso}
+\begin{tabular}{|l|c|}
+\hline
+\textbf{Uso} & \textbf{Carga Viva (kg/m²)} \\
+\hline
+Vivienda & 200 \\
+\hline
+Oficinas & 250 \\
+\hline
+Comercio & 400 \\
+\hline
+Aulas & 300 \\
+\hline
+Bibliotecas & 400 \\
+\hline
+Depósitos & 500 \\
+\hline
+\end{tabular}
+\label{tab:CargasVivas}
+\end{table}
+
+\subsection{Peso Sísmico}
+\label{subsec:PesoSismico}
+
+\criteriabox[Cálculo del Peso Sísmico]
+El peso sísmico efectivo se calcula como:
+\begin{equation}
+P = PP + \alpha \cdot CV
+\label{eq:PesoSismico}
+\end{equation}
+
+donde:
+\begin{itemize}[leftmargin=*]
+    \item $PP$ = Peso propio y cargas permanentes
+    \item $CV$ = Cargas variables (vivas)
+    \item $\alpha$ = Factor de participación de cargas vivas
+\end{itemize}
+\end{criteriabox}
+
+\begin{table}[H]
+\centering
+\caption{Factores de Participación de Cargas Vivas}
+\begin{tabular}{|l|c|}
+\hline
+\textbf{Categoría de Edificación} & \textbf{Factor $\alpha$} \\
+\hline
+Categoría A (Esenciales) & 0.50 \\
+\hline
+Categoría B (Importantes) & 0.50 \\
+\hline
+Categoría C (Comunes) & 0.25 \\
+\hline
+Depósitos y Almacenes & 0.80 \\
+\hline
+\end{tabular}
+\label{tab:FactoresParticipacion}
+\end{table}
+
+El peso sísmico total de la estructura es:
+\begin{equation}
+P_{total} = @P_total.1tonf \text{ tonf}
+\end{equation}
+
+% @loads_analysis_end
+
+%======================================================================
+% SECCIÓN: COMBINACIONES DE CARGA
+%======================================================================
+
+% --- COMBINACIONES DE CARGA ---
+% @load_combinations_start
+\section{Combinaciones de Carga}
+\label{sec:CombinacionesDeCarga}
+
+\subsection{Combinaciones para Estados Límites}
+\label{subsec:CombinacionesEstadosLimites}
+
+Las combinaciones de carga consideradas según la normativa aplicable:
+
+\subsubsection{Estado Límite de Resistencia}
+\begin{align}
+U_1 &= 1.4 \cdot PP + 1.7 \cdot CV \label{eq:Comb1} \\
+U_2 &= 1.25 \cdot (PP + CV) \pm 1.0 \cdot S \label{eq:Comb2} \\
+U_3 &= 0.9 \cdot PP \pm 1.0 \cdot S \label{eq:Comb3}
+\end{align}
+
+donde:
+\begin{itemize}[leftmargin=*]
+    \item $PP$ = Cargas permanentes
+    \item $CV$ = Cargas variables
+    \item $S$ = Cargas sísmicas
+\end{itemize}
+
+\subsubsection{Estado Límite de Servicio}
+\begin{align}
+S_1 &= PP + CV \label{eq:ServComb1} \\
+S_2 &= PP + CV + 0.7 \cdot S \label{eq:ServComb2}
+\end{align}
+
+\subsection{Factores de Escala Dinámico}
+\label{subsec:FactoresEscalaDinamico}
+
+\warningbox[Factor de Escala Dinámico]
+El cortante dinámico no debe ser menor que el 80\% del cortante estático 
+para estructuras regulares, ni menor que el 90\% para estructuras irregulares.
+\end{warningbox}
+
+Los factores de escala aplicados son:
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Factor de escala X:} @FEx.3nn
+    \item \textbf{Factor de escala Y:} @FEy.3nn
+\end{itemize}
+
+% @load_combinations_end
+
+%======================================================================
+% SECCIÓN: IRREGULARIDADES ESTRUCTURALES
+%======================================================================
+
+% --- IRREGULARIDADES ESTRUCTURALES ---
+% @structural_irregularities_start
+\section{Evaluación de Irregularidades Estructurales}
+\label{sec:EvaluacionIrregularidades}
+
+\subsection{Irregularidades en Planta}
+\label{subsec:IrregularidadesPlanta}
+
+\subsubsection{Irregularidad Torsional}
+\criteriabox[Criterio de Irregularidad Torsional]
+Existe irregularidad torsional cuando en cualquier piso el desplazamiento horizontal 
+máximo del diafragma es mayor que 1.2 veces el desplazamiento horizontal promedio 
+de los extremos del diafragma.
+\end{criteriabox}
+
+\begin{equation}
+\delta_{max} > 1.2 \cdot \delta_{prom}
+\label{eq:IrregularidadTorsional}
+\end{equation}
+
+\subsubsection{Esquinas Entrantes}
+\criteriabox[Criterio de Esquinas Entrantes]
+La estructura se considera irregular cuando tiene esquinas entrantes cuyas 
+dimensiones en ambas direcciones son mayores que 20\% de la dimensión total correspondiente.
+\end{criteriabox}
+
+\subsubsection{Discontinuidades en el Diafragma}
+Se considera irregular cuando el diafragma tiene discontinuidades abruptas 
+o variaciones en rigidez, incluyendo aberturas mayores al 50\% del área bruta del diafragma.
+
+\subsection{Irregularidades en Elevación}
+\label{subsec:IrregularidadesElevacion}
+
+\subsubsection{Piso Blando}
+\criteriabox[Criterio de Piso Blando]
+Existe irregularidad de piso blando cuando la rigidez lateral de un piso es menor 
+que 70\% de la rigidez del piso inmediatamente superior, o menor que 80\% del 
+promedio de rigidez de los tres pisos superiores.
+\end{criteriabox}
+
+\subsubsection{Irregularidad de Masa}
+Se presenta cuando la masa de cualquier piso es mayor que 1.5 veces la masa 
+del piso adyacente, exceptuando la azotea que puede ser menor.
+
+\subsubsection{Irregularidad Geométrica Vertical}
+La estructura se considera irregular cuando la dimensión horizontal del sistema 
+resistente en cualquier piso es mayor que 1.3 veces la correspondiente dimensión 
+del piso adyacente.
+
+% @structural_irregularities_end
+
+%======================================================================
+% SECCIÓN: MÉTODOS DE ANÁLISIS
+%======================================================================
+
+% --- MÉTODOS DE ANÁLISIS ---
+% @analysis_methods_start
+\section{Métodos de Análisis Sísmico}
+\label{sec:MetodosAnalisisSismico}
+
+\subsection{Análisis Estático Equivalente}
+\label{subsec:AnalisisEstaticoEquivalente}
+
+El análisis estático equivalente puede aplicarse cuando se cumplen las siguientes condiciones:
+\begin{itemize}[leftmargin=*]
+    \item La estructura es regular
+    \item El período fundamental es menor que @T_limite.2nn segundos
+    \item La altura no excede los @altura_limite.0nn metros
+\end{itemize}
+
+La fuerza cortante basal se calcula como:
+\begin{equation}
+V = \frac{ZUCS}{R} \cdot P
+\label{eq:CortanteBasal}
+\end{equation}
+
+\subsection{Análisis Dinámico Modal Espectral}
+\label{subsec:AnalisisDinamicoModalEspectral}
+
+\criteriabox[Criterios para Análisis Dinámico]
+\begin{itemize}[leftmargin=*]
+    \item Debe considerarse un número de modos tal que la suma de las masas 
+          efectivas sea por lo menos el 90\% de la masa total en cada dirección
+    \item Los modos con períodos menores que @T_min.2nn segundos pueden despreciarse
+    \item La respuesta máxima se obtiene combinando los valores modales mediante 
+          la combinación cuadrática completa (CQC)
+\end{itemize}
+\end{criteriabox}
+
+\subsection{Análisis Tiempo-Historia}
+\label{subsec:AnalisisTiempoHistoria}
+
+El análisis tiempo-historia es requerido para:
+\begin{itemize}[leftmargin=*]
+    \item Estructuras de más de @pisos_tiempo_historia.0nn pisos
+    \item Estructuras con aislamiento sísmico
+    \item Estructuras con dispositivos de disipación de energía
+    \item Estructuras irregulares que no califiquen para análisis modal espectral
+\end{itemize}
+
+% @analysis_methods_end
+
+%======================================================================
+% SECCIÓN: MODELACIÓN ESTRUCTURAL
+%======================================================================
+
+% --- MODELACIÓN ESTRUCTURAL ---
+% @structural_modeling_start
+\section{Criterios de Modelación Estructural}
+\label{sec:CriteriosModelacion}
+
+\subsection{Modelo Matemático}
+\label{subsec:ModeloMatematico}
+
+\subsubsection{Consideraciones Generales}
+El modelo estructural considera:
+\begin{itemize}[leftmargin=*]
+    \item Elementos tipo frame para vigas y columnas
+    \item Elementos tipo shell para losas y muros
+    \item Diafragma rígido en cada nivel
+    \item Distribución de masas concentradas en los nudos
+    \item Propiedades elásticas de materiales
+\end{itemize}
+
+\subsubsection{Propiedades de Materiales}
+\begin{table}[H]
+\centering
+\caption{Propiedades de Materiales Estructurales}
+\begin{tabular}{|l|c|c|c|}
+\hline
+\textbf{Material} & \textbf{f'c/fy (kg/cm²)} & \textbf{E (kg/cm²)} & \textbf{$\gamma$ (kg/m³)} \\
+\hline
+Concreto & @fc.0nn & @Ec.0nn & 2400 \\
+\hline
+Acero & @fy.0nn & 2,040,000 & 7850 \\
+\hline
+\end{tabular}
+\label{tab:PropiedadesMateriales}
+\end{table}
+
+\subsection{Condiciones de Apoyo}
+\label{subsec:CondicionesApoyo}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Fundaciones:} Se consideran empotradas para efectos del análisis sísmico
+    \item \textbf{Interacción suelo-estructura:} @interaccion_suelo.0nn
+    \item \textbf{Efectos P-Delta:} @efectos_pdelta.0nn cuando la deriva excede 0.005
+\end{itemize}
+
+% @structural_modeling_end
+
+%======================================================================
+% SECCIÓN: VERIFICACIONES COMPLEMENTARIAS  
+%======================================================================
+
+% --- VERIFICACIONES COMPLEMENTARIAS ---
+% @complementary_verifications_start
+\section{Verificaciones Complementarias}
+\label{sec:VerificacionesComplementarias}
+
+\subsection{Verificación de Software}
+\label{subsec:VerificacionSoftware}
+
+El análisis se realizó utilizando:
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Software:} @software.0nn
+    \item \textbf{Versión:} @version_software.0nn
+    \item \textbf{Verificación:} Validado con @metodo_verificacion.0nn
+\end{itemize}
+
+\subsection{Control de Calidad}
+\label{subsec:ControlCalidad}
+
+Se realizaron las siguientes verificaciones:
+\begin{enumerate}[leftmargin=*]
+    \item Equilibrio de fuerzas en el modelo estructural
+    \item Verificación de periodicidad de la estructura
+    \item Revisión de participación modal acumulada
+    \item Comparación con métodos simplificados
+    \item Verificación de unidades y factores de conversión
+\end{enumerate}
+
+\subsection{Sensibilidad de Resultados}
+\label{subsec:SensibilidadResultados}
+
+Se evaluó la sensibilidad de los resultados ante variaciones en:
+\begin{itemize}[leftmargin=*]
+    \item Propiedades de materiales ($\pm$10\%)
+    \item Cargas variables ($\pm$15\%)
+    \item Parámetros sísmicos ($\pm$5\%)
+\end{itemize}
+
+Los resultados muestran variaciones máximas de @variacion_max.1nn\% en las 
+respuestas principales.
+
+% @complementary_verifications_end
+
+%======================================================================
+% SECCIÓN: LIMITACIONES Y RECOMENDACIONES
+%======================================================================
+
+% --- LIMITACIONES Y RECOMENDACIONES ---
+% @limitations_recommendations_start
+\section{Limitaciones y Recomendaciones}
+\label{sec:LimitacionesRecomendaciones}
+
+\subsection{Limitaciones del Análisis}
+\label{subsec:LimitacionesAnalisis}
+
+\begin{warningbox}[Limitaciones Importantes]
+\begin{itemize}[leftmargin=*]
+    \item El análisis considera comportamiento elástico lineal
+    \item No se evalúan efectos de licuefacción del suelo
+    \item Los efectos de interacción suelo-estructura son aproximados
+    \item Las propiedades dinámicas se consideran constantes
+    \item No se incluyen efectos de torsión accidental en elementos verticales
+\end{itemize}
+\end{warningbox}
+
+\subsection{Recomendaciones para el Diseño}
+\label{subsec:RecomendacionesDiseno}
+
+\begin{enumerate}[leftmargin=*]
+    \item Verificar que el detallado de elementos garantice la ductilidad asumida
+    \item Implementar sistemas de control de deriva cuando sea requerido
+    \item Considerar efectos de segundo orden en elementos esbeltos
+    \item Evaluar conexiones especiales en zonas de alta demanda sísmica
+    \item Implementar sistemas redundantes en elementos críticos
+\end{enumerate}
+
+\subsection{Recomendaciones para la Construcción}
+\label{subsec:RecomendacionesConstruccion}
+
+\begin{itemize}[leftmargin=*]
+    \item Control de calidad estricto en materiales estructurales
+    \item Supervisión especializada en elementos sísmicos críticos
+    \item Implementación de juntas sísmicas según diseño
+    \item Verificación de continuidad en diafragmas
+    \item Control dimensional de elementos estructurales
+\end{itemize}
+
+% @limitations_recommendations_end
+
+%======================================================================
+% FIN DE SECCIONES COMUNES
+%======================================================================

@@ -1,0 +1,550 @@
+%======================================================================
+% PLANTILLA BASE PARA MEMORIAS DE CÁLCULO SÍSMICO
+% Sistema Centralizado de Interfaces Sísmicas
+% Versión: 1.0.0
+%======================================================================
+
+\documentclass{article}
+
+%======================================================================
+% CONFIGURACIÓN DE CODIFICACIÓN Y FUENTES
+%======================================================================
+\usepackage[T1]{fontenc}          % Codificación de fuentes
+\usepackage[utf8]{inputenc}       % Codificación de entrada UTF-8
+\usepackage{lmodern}              % Fuentes Latin Modern
+\usepackage{textcomp}             % Símbolos adicionales de texto
+
+%======================================================================
+% CONFIGURACIÓN DE PÁGINA Y GEOMETRÍA
+%======================================================================
+\usepackage{lastpage}             % Referencia a la última página
+\usepackage{geometry}             % Configuración de márgenes
+\geometry{
+    left=2.5cm,
+    top=2.0cm,
+    right=2.5cm,
+    bottom=2.0cm,
+    headheight=1.2cm,
+    headsep=0.8cm,
+    footskip=1.0cm
+}
+
+%======================================================================
+% PAQUETES PARA COLORES Y DISEÑO
+%======================================================================
+\usepackage[dvipsnames]{xcolor}   % Colores extendidos
+\usepackage{tcolorbox}            % Cajas coloreadas para normativas
+
+%======================================================================
+% PAQUETES PARA TABLAS Y ARRAYS
+%======================================================================
+\usepackage{array}                % Mejoras en tablas
+\usepackage{colortbl}             % Colores en tablas
+\usepackage{booktabs}             % Tablas profesionales
+\usepackage{multirow}             % Celdas que abarcan múltiples filas
+\usepackage{makecell}             % Herramientas para celdas
+\usepackage{longtable}            % Tablas que abarcan múltiples páginas
+
+%======================================================================
+% PAQUETES PARA GRÁFICOS E IMÁGENES
+%======================================================================
+\usepackage{graphicx}             % Inclusión de imágenes
+\usepackage{caption}              % Control de captions
+\usepackage{subcaption}           % Subfiguras y subtablas
+\usepackage{float}                % Control de posicionamiento [H]
+
+%======================================================================
+% PAQUETES PARA MATEMÁTICAS Y ECUACIONES
+%======================================================================
+\usepackage{amsmath}              % Matemáticas avanzadas
+\usepackage{amsfonts}             % Fuentes matemáticas
+\usepackage{amssymb}              % Símbolos matemáticos
+
+%======================================================================
+% PAQUETES PARA DISEÑO Y FORMATO
+%======================================================================
+\usepackage{ragged2e}             % Alineación de texto mejorada
+\usepackage{enumitem}             % Control de listas
+
+%======================================================================
+% PAQUETES PARA GRÁFICOS TÉCNICOS (OPCIONAL)
+%======================================================================
+\usepackage{tikz}                 % Gráficos vectoriales
+\usepackage{pgfplots}             % Gráficos de datos
+\pgfplotsset{compat=1.18}         % Versión de compatibilidad
+
+%======================================================================
+% CONFIGURACIÓN DE RUTAS DE IMÁGENES
+%======================================================================
+\graphicspath{{images/}{../images/}{./}}
+
+%======================================================================
+% CONFIGURACIÓN DE ENCABEZADOS Y PIES DE PÁGINA
+%======================================================================
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{} % Limpiar encabezados y pies por defecto
+
+% Encabezado
+\fancyhead[L]{\small\textit{@proyecto.0nn}}
+\fancyhead[C]{\small\textbf{Memoria de Cálculo Sísmico}}
+\fancyhead[R]{\small Página \thepage\ de \pageref{LastPage}}
+
+% Pie de página
+\fancyfoot[L]{\small @autor.0nn}
+\fancyfoot[C]{\small @fecha.0nn}
+\fancyfoot[R]{\small Norma: @norma.0nn}
+
+% Líneas decorativas
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+%======================================================================
+% PERSONALIZACIÓN DE ESTILOS
+%======================================================================
+
+% Estilo para cajas de normativa (artículos)
+\newtcolorbox{normbox}[1][]{
+    colback=gray!5!white,
+    colframe=blue!75!black,
+    fonttitle=\bfseries,
+    title=#1,
+    enhanced,
+    attach boxed title to top left={yshift=-2mm, xshift=2mm},
+    boxed title style={
+        colback=blue!75!black,
+        coltext=white,
+        size=fbox,
+        boxrule=0pt,
+        boxsep=2pt,
+        left=2pt,
+        right=2pt
+    }
+}
+
+% Estilo para cajas de criterios técnicos
+\newtcolorbox{criteriabox}[1][]{
+    colback=green!5!white,
+    colframe=green!35!black,
+    fonttitle=\bfseries,
+    title=#1,
+    enhanced,
+    attach boxed title to top left={yshift=-2mm, xshift=2mm},
+    boxed title style={
+        colback=green!35!black,
+        coltext=white,
+        size=fbox,
+        boxrule=0pt,
+        boxsep=2pt,
+        left=2pt,
+        right=2pt
+    }
+}
+
+% Estilo para cajas de advertencia
+\newtcolorbox{warningbox}[1][]{
+    colback=orange!5!white,
+    colframe=orange!75!black,
+    fonttitle=\bfseries,
+    title=#1,
+    enhanced,
+    attach boxed title to top left={yshift=-2mm, xshift=2mm},
+    boxed title style={
+        colback=orange!75!black,
+        coltext=white,
+        size=fbox,
+        boxrule=0pt,
+        boxsep=2pt,
+        left=2pt,
+        right=2pt
+    }
+}
+
+%======================================================================
+% COMANDOS PERSONALIZADOS
+%======================================================================
+
+% Comando para variables sísmicas destacadas
+\newcommand{\seismicvar}[1]{\textbf{\textcolor{blue}{#1}}}
+
+% Comando para valores numéricos importantes
+\newcommand{\importantvalue}[1]{\textbf{\textcolor{red}{#1}}}
+
+% Comando para referencias a normativas
+\newcommand{\normref}[1]{\textit{\textcolor{blue}{#1}}}
+
+% Comando para unidades
+\newcommand{\unit}[1]{\text{ #1}}
+
+%======================================================================
+% CONFIGURACIÓN DE NUMERACIÓN
+%======================================================================
+\setcounter{tocdepth}{3}          % Profundidad del índice
+\setcounter{secnumdepth}{3}       % Profundidad de numeración de secciones
+
+%======================================================================
+% INICIO DEL DOCUMENTO
+%======================================================================
+\begin{document}
+
+%======================================================================
+% PÁGINA DE TÍTULO
+%======================================================================
+\begin{titlepage}
+    \centering
+    \vspace*{0.5cm}
+    
+    {\Large\textbf{MEMORIA DE CÁLCULO}}\\[1em]
+    {\Large\textbf{DE ANÁLISIS SÍSMICO}}\\[1.5em]
+    
+    % Placeholder para logo o imagen de portada
+    @image_portada
+    
+    \vfill
+    
+    % Información del proyecto
+    \begin{tcolorbox}[
+        colback=blue!5!white,
+        colframe=blue!50!black,
+        width=0.8\textwidth,
+        arc=3mm,
+        boxrule=1pt
+    ]
+        \centering
+        \textbf{INFORMACIÓN DEL PROYECTO}\\[1em]
+        
+        \textbf{Proyecto:} \\
+        \textit{@proyecto.0nn}\\[1em]
+        
+        \textbf{Ubicación:} \\
+        \textit{@ubicacion.0nn}\\[1em]
+        
+        \textbf{Norma Aplicada:} \\
+        \textit{@norma.0nn}\\[1em]
+        
+        \textbf{Elaborado por:} \\
+        \textit{@autor.0nn} \\[0.5em]
+        \textit{@especialidad.0nn}\\[1em]
+        
+        \textbf{Fecha:} \\
+        \textit{@fecha.0nn}\\[0.5em]
+    \end{tcolorbox}
+    
+    \vfill
+    
+    % Logo institucional
+    \includegraphics[width=0.2\textwidth]{images/logo.png}
+    
+    \vspace*{0.5cm}
+\end{titlepage}
+
+%======================================================================
+% TABLA DE CONTENIDOS
+%======================================================================
+\tableofcontents
+\clearpage
+
+%======================================================================
+% LISTA DE FIGURAS Y TABLAS
+%======================================================================
+\listoffigures
+\listoftables
+\clearpage
+
+%======================================================================
+% RESUMEN EJECUTIVO
+%======================================================================
+\section{Resumen Ejecutivo}
+\label{sec:ResumenEjecutivo}
+
+El presente documento contiene la memoria de cálculo del análisis sísmico para el proyecto 
+\textit{@proyecto.0nn}, ubicado en \textit{@ubicacion.0nn}, desarrollado según la normativa 
+\textit{@norma.0nn}.
+
+\subsection{Características Principales del Proyecto}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Ubicación:} @ubicacion.0nn
+    \item \textbf{Zona Sísmica:} @zona_sismica.0nn
+    \item \textbf{Tipo de Suelo:} @tipo_suelo.0nn
+    \item \textbf{Categoría de Edificación:} @categoria.0nn
+    \item \textbf{Sistema Estructural X:} @sistema_x.0nn
+    \item \textbf{Sistema Estructural Y:} @sistema_y.0nn
+\end{itemize}
+
+\subsection{Parámetros Sísmicos Principales}
+\begin{table}[H]
+\centering
+\caption{Resumen de Parámetros Sísmicos}
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{Parámetro} & \textbf{Símbolo} & \textbf{Valor} \\
+\hline
+Factor de Zona & Z & @Z.3f1 \\
+\hline
+Factor de Uso & U & @U.2f1 \\
+\hline
+Factor de Suelo & S & @S.2f1 \\
+\hline
+Factor de Reducción X & Rx & @Rx.2f1 \\
+\hline
+Factor de Reducción Y & Ry & @Ry.2f1 \\
+\hline
+Período Fundamental X & Tx & @Tx.3nn s \\
+\hline
+Período Fundamental Y & Ty & @Ty.3nn s \\
+\hline
+\end{tabular}
+\label{tab:ParametrosSismicos}
+\end{table}
+
+%======================================================================
+% CONTENIDO PERSONALIZABLE
+%======================================================================
+
+% Placeholder para descripción del proyecto (específica por país)
+@content_description
+
+% Placeholder para criterios de diseño (específica por país)
+@content_criteria
+
+% Placeholder para análisis de cargas (específica por país)
+@content_loads
+
+%======================================================================
+% ANÁLISIS SÍSMICO - SECCIÓN PRINCIPAL
+%======================================================================
+\section{Análisis Sísmico}
+\label{sec:AnalisisSismico}
+
+%----------------------------------------------------------------------
+% SUBSECCIÓN: PARÁMETROS DE SITIO
+%----------------------------------------------------------------------
+\subsection{Parámetros de Sitio}
+\label{subsec:ParametrosDeSitio}
+
+Los parámetros sísmicos de sitio se determinan en función de la ubicación geográfica 
+del proyecto y las características locales del suelo.
+
+%--- Placeholder para procesamiento de tablas específicas por país ---
+@tables_zone_soil_factors
+
+%----------------------------------------------------------------------
+% SUBSECCIÓN: ESPECTRO DE RESPUESTA
+%----------------------------------------------------------------------
+\subsection{Espectro de Respuesta Sísmica}
+\label{subsec:EspectroDeRespuesta}
+
+El espectro de respuesta se construye según los parámetros de sitio determinados 
+y los criterios establecidos en la normativa aplicable.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/espectro_respuestas}
+    \caption{Espectro de Respuesta de Aceleraciones}
+    \label{fig:EspectroRespuesta}
+\end{figure}
+
+Los períodos característicos del espectro son:
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Tp (Período de inicio de meseta):} @Tp.3nn s
+    \item \textbf{TL (Período límite):} @Tl.3nn s
+    \item \textbf{Sa máx (Aceleración espectral máxima):} @Sa_max.3f1 g
+\end{itemize}
+
+%----------------------------------------------------------------------
+% SUBSECCIÓN: ANÁLISIS MODAL
+%----------------------------------------------------------------------
+\subsection{Análisis Modal}
+\label{subsec:AnalisisModal}
+
+Se realiza análisis modal espectral considerando los modos de vibración 
+necesarios para capturar al menos el 90\% de la masa participativa en cada dirección.
+
+% Placeholder para tabla modal (procesada por TableProcessor)
+@table_modal
+
+Los períodos fundamentales de vibración obtenidos son:
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Período fundamental en X:} @Tx.3nn s
+    \item \textbf{Período fundamental en Y:} @Ty.3nn s
+    \item \textbf{Número de modos considerados:} @num_modos.0nn
+\end{itemize}
+
+%----------------------------------------------------------------------
+% SUBSECCIÓN: ANÁLISIS DE IRREGULARIDADES
+%----------------------------------------------------------------------
+\subsection{Análisis de Irregularidades}
+\label{subsec:AnalisisIrregularidades}
+
+Se evalúan las irregularidades estructurales según los criterios normativos.
+
+\subsubsection{Irregularidad Torsional}
+Se verifica que la deriva máxima de entrepiso no exceda en más de 20\% 
+el promedio de las derivas en los extremos del edificio.
+
+% Placeholder para tablas de torsión (procesadas por TableProcessor)
+@table_torsion_x
+@table_torsion_y
+
+\subsubsection{Irregularidad de Masa}
+Se verifica que no exista concentración excesiva de masa en ningún piso.
+
+% Placeholder para tabla de masa (procesada por TableProcessor)
+@table_mass
+
+\subsubsection{Irregularidad de Rigidez (Piso Blando)}
+Se verifica que la rigidez lateral de ningún piso sea menor al 70\% 
+de la rigidez del piso superior.
+
+% Placeholder para tablas de rigidez (procesadas por TableProcessor)
+@table_stiffness_x
+@table_stiffness_y
+
+%----------------------------------------------------------------------
+% SUBSECCIÓN: FUERZAS SÍSMICAS
+%----------------------------------------------------------------------
+\subsection{Fuerzas Sísmicas}
+\label{subsec:FuerzasSismicas}
+
+\subsubsection{Cortante Basal}
+Las cortantes basales obtenidas del análisis dinámico son:
+
+\begin{table}[H]
+\centering
+\caption{Cortantes Basales}
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{Análisis} & \textbf{Vx (tonf)} & \textbf{Vy (tonf)} \\
+\hline
+Dinámico & @Vdx.1tonf & @Vdy.1tonf \\
+\hline
+Estático & @Vsx.1tonf & @Vsy.1tonf \\
+\hline
+\textbf{Porcentaje (\%)} & @perVdsx.1nn & @perVdsy.1nn \\
+\hline
+\end{tabular}
+\label{tab:CortantesBasales}
+\end{table}
+
+% Placeholder para tablas de cortantes por piso
+@table_shear_static
+@table_shear_dynamic
+
+%----------------------------------------------------------------------
+% SUBSECCIÓN: DESPLAZAMIENTOS Y DERIVAS
+%----------------------------------------------------------------------
+\subsection{Desplazamientos y Derivas}
+\label{subsec:DesplazamientosYDerivas}
+
+\subsubsection{Desplazamientos Laterales}
+Los desplazamientos inelásticos se calculan multiplicando los desplazamientos 
+elásticos por los factores de amplificación correspondientes.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/desplazamientos_laterales}
+    \caption{Desplazamientos Laterales Inelásticos}
+    \label{fig:DesplazamientosLaterales}
+\end{figure}
+
+% Placeholder para tabla de desplazamientos
+@table_disp
+
+\subsubsection{Derivas de Entrepiso}
+Las derivas de entrepiso se verifican contra los límites establecidos por la normativa.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/derivas}
+    \caption{Derivas de Entrepiso}
+    \label{fig:Derivas}
+\end{figure}
+
+% Placeholder para tabla de derivas
+@table_drifts
+
+La deriva máxima obtenida es de @deriva_max.4nn, que es @cumple_deriva.0nn 
+con el límite normativo de @limite_deriva.3nn.
+
+%----------------------------------------------------------------------
+% SUBSECCIÓN: CORTANTES POR PISO
+%----------------------------------------------------------------------
+\subsection{Cortantes por Piso}
+\label{subsec:CortantesPorPiso}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{images/cortante_dinamico}
+        \caption{Cortante Dinámico}
+        \label{fig:CortanteDinamico}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{images/cortante_estatico}
+        \caption{Cortante Estático}
+        \label{fig:CortanteEstatico}
+    \end{subfigure}
+    \caption{Distribución de Cortantes por Piso}
+    \label{fig:CortantesPorPiso}
+\end{figure}
+
+%======================================================================
+% CONCLUSIONES Y RECOMENDACIONES
+%======================================================================
+\section{Conclusiones y Recomendaciones}
+\label{sec:ConclusionesYRecomendaciones}
+
+\subsection{Conclusiones}
+\begin{enumerate}[leftmargin=*]
+    \item El análisis sísmico se realizó conforme a los requisitos de la normativa @norma.0nn.
+    \item Los períodos fundamentales obtenidos son @Tx.3nn s (dirección X) y @Ty.3nn s (dirección Y).
+    \item Las derivas de entrepiso cumplen con los límites normativos establecidos.
+    \item La estructura presenta @regularidad.0nn estructural según los criterios evaluados.
+    \item Los cortantes dinámicos representan el @perVdsx.1nn\% y @perVdsy.1nn\% de los cortantes estáticos.
+\end{enumerate}
+
+\subsection{Recomendaciones}
+\begin{enumerate}[leftmargin=*]
+    \item Verificar que el modelo estructural incorpore correctamente las cargas sísmicas calculadas.
+    \item Considerar los factores de escala aplicados en el análisis dinámico.
+    \item Revisar el detallado de elementos estructurales según las fuerzas obtenidas.
+    \item Implementar las medidas constructivas requeridas por la normativa aplicable.
+\end{enumerate}
+
+%======================================================================
+% ANEXOS
+%======================================================================
+\section{Anexos}
+\label{sec:Anexos}
+
+\subsection{Anexo A: Datos del Modelo Estructural}
+% Placeholder para información adicional del modelo
+@model_data
+
+\subsection{Anexo B: Memoria de Cálculo Detallada}
+% Placeholder para cálculos detallados adicionales
+@detailed_calculations
+
+\subsection{Anexo C: Verificaciones Complementarias}
+% Placeholder para verificaciones adicionales específicas por país
+@additional_verifications
+
+%======================================================================
+% BIBLIOGRAFÍA Y REFERENCIAS
+%======================================================================
+\section{Referencias Normativas}
+\label{sec:ReferenciasNormativas}
+
+\begin{enumerate}[leftmargin=*]
+    \item @referencia_principal.0nn
+    \item @referencia_secundaria.0nn
+    \item @referencias_adicionales.0nn
+\end{enumerate}
+
+%======================================================================
+% FIN DEL DOCUMENTO
+%======================================================================
+\end{document}
